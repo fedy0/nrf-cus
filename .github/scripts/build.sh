@@ -30,6 +30,6 @@ mkdir ${NRF_SDK_ROOT}
 sudo apt-get install unzip
 unzip ${NRF_SDK}.zip -d ${NRF_SDK_ROOT}
 
-cp ./app ${NRF_SDK_ROOT_PATH}/examples/peripheral/
+cp -r ./app ${NRF_SDK_ROOT_PATH}/examples/peripheral/
 cd ${NRF_SDK_ROOT_PATH}/examples/peripheral/app/pca10040/s132/armgcc/
 make
