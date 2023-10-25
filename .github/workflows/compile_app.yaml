@@ -1,27 +1,23 @@
-# This is the name of the workflow, visible on GitHub UI.
+---
 name: Build-NFR
-
-# This is the triggers for the workflow.
 on:
-  workflow_dispatch:
+  workflow_dispatch: null
   push:
     branches:
-    - main
+      - main
     paths:
-    - 'app/**'
+      - app/**
   pull_request:
     branches:
-    - main
+      - main
     paths:
-    - 'app/**'
-    
+      - app/**
 env:
   NRF_SDK: nRF5_SDK_15.3.0_59ac345
   NRF_SDK_VERSION: nRF5_SDK_v15.x.x
-  NRF_SDK_DOWNLOAD_URL: "https://developer.nordicsemi.com/nRF5_SDK/${NRF_SDK_VERSION}/${NRF_SDK}.zip"
+  NRF_SDK_DOWNLOAD_URL: https://developer.nordicsemi.com/nRF5_SDK/${NRF_SDK_VERSION}/${NRF_SDK}.zip
   NRF_SDK_ROOT: nrf_sdk
   NRF_SDK_ROOT_PATH: ${NRF_SDK_ROOT}/${NRF_SDK}
-  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,11 +25,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Install ARM GCC
-        uses: fiam/arm-none-eabi-gcc@v1
+      - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
         with:
-      	  release: '9-2019-q4' # The arm-none-eabi-gcc release to use.
-      	  
+          release: '12.3.Rel1'
+          
       - name: Build NFR source
         run: |
           chmod +x ./.github/scripts/build.sh
@@ -45,3 +41,4 @@ jobs:
         with:
           name: Output Binaries
           path: ./app/pca10040/s132/armgcc/_build
+
