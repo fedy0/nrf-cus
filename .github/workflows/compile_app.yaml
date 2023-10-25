@@ -1,0 +1,49 @@
+# This is the name of the workflow, visible on GitHub UI.
+name: Build-NFR
+
+# This is the triggers for the workflow.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+    paths:
+    - 'app/**'
+  pull_request:
+    branches:
+    - main
+    paths:
+    - 'app/**'
+    
+env:
+  DAY_OF_WEEK: Monday
+  NRF_SDK: nRF5_SDK_15.3.0_59ac345
+  NRF_SDK_VERSION: nRF5_SDK_v15.x.x
+  NRF_SDK_DOWNLOAD_URL: "https://developer.nordicsemi.com/nRF5_SDK/${NRF_SDK_VERSION}/${NRF_SDK}.zip"
+  NRF_SDK_ROOT: nrf_sdk
+  NRF_SDK_ROOT_PATH: ${NRF_SDK_ROOT}/${NRF_SDK}
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Build NFR source
+        run: |
+        	chmod +x ./.github/scripts/build.sh
+        	./.github/scripts/build.sh
+        shell: bash
+      - 
+      	name: arm-none-eabi-gcc
+      	uses: fiam/arm-none-eabi-gcc@v1
+      	with:
+      		release: '9-2019-q4' # The arm-none-eabi-gcc release to use.
+      - 
+      	name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Output Binaries
+          path: ./app/pca10040/s132/armgcc/_build
