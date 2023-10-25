@@ -12,12 +12,7 @@ on:
       - main
     paths:
       - app/**
-env:
-  NRF_SDK: nRF5_SDK_15.3.0_59ac345
-  NRF_SDK_VERSION: nRF5_SDK_v15.x.x
-  NRF_SDK_DOWNLOAD_URL: https://developer.nordicsemi.com/nRF5_SDK/${NRF_SDK_VERSION}/${NRF_SDK}.zip
-  NRF_SDK_ROOT: nrf_sdk
-  NRF_SDK_ROOT_PATH: ${NRF_SDK_ROOT}/${NRF_SDK}
+
 jobs:
   build:
     runs-on: ubuntu-latest
