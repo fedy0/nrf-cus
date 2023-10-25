@@ -16,7 +16,6 @@ on:
     - 'app/**'
     
 env:
-  DAY_OF_WEEK: Monday
   NRF_SDK: nRF5_SDK_15.3.0_59ac345
   NRF_SDK_VERSION: nRF5_SDK_v15.x.x
   NRF_SDK_DOWNLOAD_URL: "https://developer.nordicsemi.com/nRF5_SDK/${NRF_SDK_VERSION}/${NRF_SDK}.zip"
@@ -30,17 +29,17 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v4
+      - 
+      	name: Install ARM GCC
+      	uses: fiam/arm-none-eabi-gcc@v1
+      	with:
+      		release: '9-2019-q4' # The arm-none-eabi-gcc release to use.
       -
         name: Build NFR source
         run: |
         	chmod +x ./.github/scripts/build.sh
         	./.github/scripts/build.sh
         shell: bash
-      - 
-      	name: arm-none-eabi-gcc
-      	uses: fiam/arm-none-eabi-gcc@v1
-      	with:
-      		release: '9-2019-q4' # The arm-none-eabi-gcc release to use.
       - 
       	name: Upload Artifacts
         uses: actions/upload-artifact@v3
